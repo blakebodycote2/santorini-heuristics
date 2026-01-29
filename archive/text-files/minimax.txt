@@ -1,0 +1,70 @@
+minimax
+1st: check if you can win
+2nd: start with a terrible score value
+3rd: check all next moves, and (recursively) compute the negative minimax for opponent.
+
+with alpha beta pruning
+
+order exploration (look at best move first)
+
+use bitboard operations to speed up computational power
+
+- instead or move being a combination of remove + set, move should be a bit shift (toggle starting square and end square)
+
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19
+20 21 22 23 24
+
+00000
+01000
+00001
+01000
+00001
+
+
+workers1 = 16, 8
+workers2 = 6, 18
+
+count = 1
+
+16 -> 10 -> 4 x (OoB)
+16 -> 10 -> 5 (eval = -10)
+16 -> 10 -> 6 x (worker)
+16 -> 10 -> 9 x (OoB)
+16 -> 10 -> 11 (eval = -10)
+16 -> 10 -> 14 (OoB)
+16 -> 10 -> 15 (eval = -10)
+16 -> 10 -> 16 (error, couldn't build where he previously was)
+
+count = 4
+
+16 -> 11 -> ... (only 6 is error)
+
+count = 12
+
+16 -> 12
+
+Aim for this project
+Add a negamax search algorithm for Santorini with
+- alpha-beta pruning
+- move exploration ordering
+- bitboards
+Then create a genetic algorithm for the evaluation function of this search tree, find the important coefficients.
+
+what makes a good evaluation function?
+- worker mobility
+- workers heights
+- worker coverage (buildability)
+- double each of these by 2 for the opponents 
+
+- closeness of workers to the middle
+- distance between workers
+
+Additionally, mobility and coverage can be slightly better if the spots around it are higher for you and lower for opponent (especially 3 build spots where opponent does not have coverage)
+
+current player will be positive, opposing player will be negative regardless of position.
+
+
+
